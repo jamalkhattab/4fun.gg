@@ -4,10 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FourfunApplication {
-
+public class Fourfun {
 	public static void main(String[] args) {
-		SpringApplication.run(FourfunApplication.class, args);
+		SpringApplication.run(Fourfun.class, args);
 	}
-
 }
