@@ -1,8 +1,8 @@
-package com.khatterji.fourfun.service.impl;
+package com.khatterji.fourfun.service.fourfun.impl;
 
 import com.khatterji.fourfun.model.Summoner;
 import com.khatterji.fourfun.repository.SummonerRepository;
-import com.khatterji.fourfun.service.SummonerService;
+import com.khatterji.fourfun.service.fourfun.SummonerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

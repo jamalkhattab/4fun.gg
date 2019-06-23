@@ -1,4 +1,4 @@
-package com.khatterji.fourfun.service;
+package com.khatterji.fourfun.service.fourfun;
 
 import com.khatterji.fourfun.model.Summoner;
 
