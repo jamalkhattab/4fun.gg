@@ -21,23 +21,25 @@ public class APIHandlerImpl implements APIHandler {
     }
 
     //TODO: fix default
+    /*
+        url: https://{RiotRegionalEndpoints}.api.riotgames.com/lol
+    */
     private void prepareUrl(String region) {
         switch (region) {
-            case "eune":
-                url = String.format("%s.%s", RiotRegionalEndpoints.EUNE, RiotRegionalEndpoints.RIOTAPIHOST);
-                break;
             case "euw":
-                url = String.format("%s.%s", RiotRegionalEndpoints.EUW, RiotRegionalEndpoints.RIOTAPIHOST);
+                url = String.format("%s.", RiotRegionalEndpoints.EUW);
                 break;
             case "na":
-                url = String.format("%s.%s", RiotRegionalEndpoints.NA, RiotRegionalEndpoints.RIOTAPIHOST);
+                url = String.format("%s.", RiotRegionalEndpoints.NA);
                 break;
             case "korea":
-                url = String.format("%s.%s", RiotRegionalEndpoints.KOREA, RiotRegionalEndpoints.RIOTAPIHOST);
+                url = String.format("%s.", RiotRegionalEndpoints.KOREA);
                 break;
             default:
-                url = "INVALID REGION";
+                url = String.format("%s.", RiotRegionalEndpoints.EUNE);
+                break;
         }
+        url += RiotRegionalEndpoints.RIOTAPIHOST;
     }
 
     //TODO: add loggers and handle the exception well

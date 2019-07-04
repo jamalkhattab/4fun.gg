@@ -2,7 +2,7 @@ package com.khatterji.fourfun.apiobject;
 
 import java.sql.Timestamp;
 
-public class Summoner {
+public class RiotSummoner {
     private String id;
     private String puuid;
     private String name;
@@ -11,9 +11,9 @@ public class Summoner {
     private Long profileIconId;
     private Timestamp revisionDate;
 
-    public Summoner(){}
+    public RiotSummoner(){}
 
-    public Summoner(String id, String puuid, String name, Long summonerLevel, String accountId, Long profileIconId, Timestamp revisionDate) {
+    public RiotSummoner(String id, String puuid, String name, Long summonerLevel, String accountId, Long profileIconId, Timestamp revisionDate) {
         this.id = id;
         this.puuid = puuid;
         this.name = name;

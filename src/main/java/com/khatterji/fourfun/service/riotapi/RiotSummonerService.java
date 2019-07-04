@@ -1,9 +1,8 @@
 package com.khatterji.fourfun.service.riotapi;
 
-import com.khatterji.fourfun.apiobject.Summoner;
-import reactor.core.publisher.Mono;
+import com.khatterji.fourfun.apiobject.RiotSummoner;
 
 public interface RiotSummonerService {
     public void execute(String region);
-    public String getSummonerByName(String name);
+    public RiotSummoner getSummonerByName(String name);
 }
