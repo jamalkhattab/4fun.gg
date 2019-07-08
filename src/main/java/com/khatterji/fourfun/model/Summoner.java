@@ -17,13 +17,14 @@ public class Summoner {
     private String region;
     private Long level;
     private String name;
-    private Integer profileIconId;
+    private Long profileIconId;
+    private Long revisionDate;
 
     public Summoner(){
         super();
     }
 
-    public Summoner(Long id, String encryptedSummonerId, String puuid, String region, Long level, String name, Integer profileIconId) {
+    public Summoner(Long id, String encryptedSummonerId, String puuid, String region, Long level, String name, Long profileIconId, Long revisionDate) {
         super();
         this.id = id;
         this.encryptedSummonerId = encryptedSummonerId;
@@ -32,6 +33,7 @@ public class Summoner {
         this.level = level;
         this.name = name;
         this.profileIconId = profileIconId;
+        this.revisionDate = revisionDate;
     }
 
     public Long getId() {
@@ -82,11 +84,19 @@ public class Summoner {
         this.name = name;
     }
 
-    public Integer getProfileIconId() {
+    public Long getProfileIconId() {
         return profileIconId;
     }
 
-    public void setProfileIconId(Integer profileIconId) {
+    public void setProfileIconId(Long profileIconId) {
         this.profileIconId = profileIconId;
+    }
+
+    public Long getRevisionDate() {
+        return revisionDate;
+    }
+
+    public void setRevisionDate(Long revisionDate) {
+        this.revisionDate = revisionDate;
     }
 }

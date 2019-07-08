@@ -19,6 +19,11 @@ public class SummonerServiceImpl implements SummonerService {
     }
 
     @Override
+    public Summoner findByName(String name) {
+        return summonerRepository.findByName(name);
+    }
+
+    @Override
     public void saveOrUpdateSummoner(Summoner summoner) {
         summonerRepository.save(summoner);
     }
