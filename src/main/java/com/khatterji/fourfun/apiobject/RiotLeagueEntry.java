@@ -1,7 +1,5 @@
 package com.khatterji.fourfun.apiobject;
 
-import java.awt.*;
-
 public class RiotLeagueEntry {
     private String leagueId;
     private String queueType;
