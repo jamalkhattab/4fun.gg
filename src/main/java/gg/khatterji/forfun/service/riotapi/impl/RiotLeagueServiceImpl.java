@@ -1,7 +1,7 @@
 package gg.khatterji.forfun.service.riotapi.impl;
 
 import gg.khatterji.forfun.riotapiobject.RiotLeagueEntry;
-import gg.khatterji.forfun.constant.RiotEndpointConstants;
+import gg.khatterji.forfun.constant.RiotEndpoints;
 import gg.khatterji.forfun.service.riotapi.RiotLeagueService;
 import gg.khatterji.forfun.service.utility.APIHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class RiotLeagueServiceImpl implements RiotLeagueService {
         apiHandler.generateUrlAndRetrieveAPIKey(region);
         this.webClient = WebClient
                 .builder()
-                .baseUrl(String.format("%s%s", apiHandler.getUrl(), RiotEndpointConstants.LEAGUE))
+                .baseUrl(String.format("%s%s", apiHandler.getUrl(), RiotEndpoints.LEAGUE))
                 .defaultHeader("X-Riot-Token", apiHandler.getApiKey())
                 .build();
     }

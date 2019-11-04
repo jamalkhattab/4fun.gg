@@ -24,7 +24,6 @@ public class SummonerRestController {
         public RiotLeagueEntry[] getSummoner(@PathVariable String name) {
         riotSummonerService.execute("eune");
         RiotSummoner riotSummoner = riotSummonerService.getSummonerByName(name);
-        //ESPBrdiPMblfEBf3yRm3fZusyBsfmil8xhVpk97nF3GWgxQ
         riotLeagueService.execute("eune");
         RiotLeagueEntry[] leagueEntries = riotLeagueService.getEntriesBySummonerId(riotSummoner.getId());
         return leagueEntries;
