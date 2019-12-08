@@ -21,13 +21,14 @@ public class RiotLeagueServiceImpl implements RiotLeagueService {
     }
 
     @Override
-    public void execute(String region) {
+    public RiotLeagueServiceImpl build(String region) {
         apiHandler.generateUrlAndRetrieveAPIKey(region);
         webClient = WebClient
                 .builder()
                 .baseUrl(String.format("%s%s", apiHandler.getUrl(), RiotEndpoints.LEAGUE))
                 .defaultHeader("X-Riot-Token", apiHandler.getApiKey())
                 .build();
+        return this;
     }
 
     @Override

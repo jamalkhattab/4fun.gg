@@ -3,6 +3,7 @@ package gg.khatterji.forfun.service.riotapi.impl;
 import gg.khatterji.forfun.exception.UnauthorizedRiotApiKeyException;
 import gg.khatterji.forfun.riotapiobject.RiotSummoner;
 import gg.khatterji.forfun.constant.RiotEndpoints;
+import gg.khatterji.forfun.service.riotapi.RiotService;
 import gg.khatterji.forfun.service.riotapi.RiotSummonerService;
 import gg.khatterji.forfun.service.utility.APIHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,15 @@ public class RiotSummonerServiceImpl implements RiotSummonerService {
         this.apiHandler = apiHandler;
     }
 
-    public void execute(String region) {
+    @Override
+    public RiotSummonerService build(String region) {
         apiHandler.generateUrlAndRetrieveAPIKey(region);
         webClient = WebClient
                 .builder()
                 .baseUrl(String.format("%s%s", apiHandler.getUrl(), RiotEndpoints.SUMMONER))
                 .defaultHeader("X-Riot-Token", apiHandler.getApiKey())
                 .build();
+        return this;
     }
 
     @Override
