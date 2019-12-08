@@ -2,11 +2,8 @@ package gg.khatterji.forfun.service.utility.impl;
 
 import gg.khatterji.forfun.constant.RiotRegionalEndpoints;
 import gg.khatterji.forfun.service.utility.APIHandler;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.Properties;
 
 @Service
 public class APIHandlerImpl implements APIHandler {
@@ -17,10 +14,9 @@ public class APIHandlerImpl implements APIHandler {
     public void generateUrlAndRetrieveAPIKey(String region)
     {
         prepareUrl(region);
-        retrieveAPIKey();
+        apiKey = retrieveAPIKey();
     }
 
-    //TODO: fix default
     /*
         url: https://{RiotRegionalEndpoints}.api.riotgames.com/lol
     */
@@ -40,16 +36,6 @@ public class APIHandlerImpl implements APIHandler {
                 break;
         }
         url += RiotRegionalEndpoints.RIOTAPIHOST;
-    }
-
-    //TODO: add loggers and handle the exception well
-    private void retrieveAPIKey() {
-        try {
-            Properties apiProperties = PropertiesLoaderUtils.loadAllProperties("api.properties");
-            apiKey = apiProperties.getProperty("api.key");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getUrl() {

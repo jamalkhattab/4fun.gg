@@ -8,15 +8,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/league")
 public class LeagueRestController {
-    @Autowired
-    RiotLeagueService riotLeagueService;
+    private final RiotLeagueService riotLeagueService;
 
-    @GetMapping("/{encryptedSummonerId}")
+    @Autowired
+    public LeagueRestController(RiotLeagueService riotLeagueService){
+        this.riotLeagueService = riotLeagueService;
+    }
+
+    @GetMapping("/{encryptedSummonerId}/{region}")
     @ResponseBody
-    public RiotLeagueEntry[] getEntries(@PathVariable String encryptedSummonerId) {
-        riotLeagueService.execute("eune");
+    public RiotLeagueEntry[] getEntries(@PathVariable String encryptedSummonerId, @PathVariable String region) {
+        riotLeagueService.execute(region);
         RiotLeagueEntry[] leagueEntries = riotLeagueService.getEntriesBySummonerId(encryptedSummonerId);
         return leagueEntries;
     }
-
 }

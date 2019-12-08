@@ -10,9 +10,12 @@ import java.util.List;
 
 @Service
 public class SummonerServiceImpl implements SummonerService {
-    @Autowired
-    SummonerRepository summonerRepository;
+    private final SummonerRepository summonerRepository;
 
+    @Autowired
+    public SummonerServiceImpl(SummonerRepository summonerRepository) {
+        this.summonerRepository = summonerRepository;
+    }
     @Override
     public List<Summoner> findAll() {
         return summonerRepository.findAll();
