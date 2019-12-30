@@ -3,7 +3,6 @@ package gg.khatterji.forfun.service.riotapi.impl;
 import gg.khatterji.forfun.exception.UnauthorizedRiotApiKeyException;
 import gg.khatterji.forfun.riotapiobject.RiotSummoner;
 import gg.khatterji.forfun.constant.RiotEndpoints;
-import gg.khatterji.forfun.service.riotapi.RiotService;
 import gg.khatterji.forfun.service.riotapi.RiotSummonerService;
 import gg.khatterji.forfun.service.utility.APIHandler;
 import org.springframework.beans.factory.annotation.Autowired;

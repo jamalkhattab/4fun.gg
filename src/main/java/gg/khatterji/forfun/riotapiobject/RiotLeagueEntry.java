@@ -136,4 +136,23 @@ public class RiotLeagueEntry {
     public void setHotStreak(boolean hotStreak) {
         this.hotStreak = hotStreak;
     }
+
+    @Override
+    public String toString() {
+        return "RiotLeagueEntry{" +
+                "leagueId='" + leagueId + '\'' +
+                ", queueType='" + queueType + '\'' +
+                ", tier='" + tier + '\'' +
+                ", rank='" + rank + '\'' +
+                ", summonerId='" + summonerId + '\'' +
+                ", summonerName='" + summonerName + '\'' +
+                ", leaguePoints=" + leaguePoints +
+                ", wins=" + wins +
+                ", losses=" + losses +
+                ", veteran=" + veteran +
+                ", inactive=" + inactive +
+                ", freshBlood=" + freshBlood +
+                ", hotStreak=" + hotStreak +
+                '}';
+    }
 }

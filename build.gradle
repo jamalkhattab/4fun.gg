@@ -14,7 +14,6 @@ repositories {
 }
 
 dependencies {
-	compile 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -22,10 +21,4 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//for Reactor Netty at http library delegated by WebClient:
 	testImplementation 'io.projectreactor:reactor-test'
-}
-
-configurations {
-	all {
-		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
 }

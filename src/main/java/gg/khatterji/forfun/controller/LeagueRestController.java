@@ -10,10 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/league")
 public class LeagueRestController {
-    private final Logger logger = LogManager.getLogger(LeagueRestController.class);
+    private final Logger logger = LogManager.getLogger(this.getClass());
     private final RiotLeagueService riotLeagueService;
 
     @Autowired
@@ -23,7 +25,7 @@ public class LeagueRestController {
 
     @GetMapping("/{encryptedSummonerId}")
     @ResponseBody
-    public RiotLeagueEntry[] getEntries(@PathVariable String encryptedSummonerId, @RequestHeader String region) {
+    public List<RiotLeagueEntry> getEntries(@PathVariable String encryptedSummonerId, @RequestHeader String region) {
         try {
             return riotLeagueService.build(region)
                                     .getEntriesBySummonerId(encryptedSummonerId);

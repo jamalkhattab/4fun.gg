@@ -4,20 +4,21 @@ import gg.khatterji.forfun.exception.UnauthorizedRiotApiKeyException;
 import gg.khatterji.forfun.riotapiobject.RiotLeagueEntry;
 import gg.khatterji.forfun.riotapiobject.RiotSummoner;
 import gg.khatterji.forfun.service.riotapi.RiotLeagueService;
-import gg.khatterji.forfun.service.riotapi.RiotService;
 import gg.khatterji.forfun.service.riotapi.RiotSummonerService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 
 @RestController
 @RequestMapping("/summoner")
 public class SummonerRestController {
-    private final Logger logger = LogManager.getLogger(SummonerRestController.class);
+    private final Logger logger = LogManager.getLogger(this.getClass());
     private final RiotSummonerService riotSummonerService;
     private final RiotLeagueService riotLeagueService;
 
@@ -29,7 +30,7 @@ public class SummonerRestController {
 
     @GetMapping("/{name}")
     @ResponseBody
-    public RiotLeagueEntry[] getSummoner(@PathVariable String name, @RequestHeader String region) {
+    public List<RiotLeagueEntry> getSummoner(@PathVariable String name, @RequestHeader String region) {
         try {
             RiotSummoner riotSummoner = riotSummonerService.build(region)
                                                            .getSummonerByName(name);

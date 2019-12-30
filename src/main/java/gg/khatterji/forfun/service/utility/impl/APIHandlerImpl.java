@@ -13,29 +13,30 @@ public class APIHandlerImpl implements APIHandler {
     @Override
     public void generateUrlAndRetrieveAPIKey(String region)
     {
-        prepareUrl(region);
-        apiKey = retrieveAPIKey();
+        this.url = prepareUrl(region);
+        this.apiKey = retrieveAPIKey();
     }
 
     /*
         url: https://{RiotRegionalEndpoints}.api.riotgames.com/lol
     */
-    private void prepareUrl(String region) {
+    private String prepareUrl(String region) {
+        String endpoint;
         switch (region) {
             case "euw":
-                url = String.format("%s.", RiotRegionalEndpoints.EUW);
+                endpoint = RiotRegionalEndpoints.EUW;
                 break;
             case "na":
-                url = String.format("%s.", RiotRegionalEndpoints.NA);
+                endpoint = RiotRegionalEndpoints.NA;
                 break;
             case "korea":
-                url = String.format("%s.", RiotRegionalEndpoints.KOREA);
+                endpoint = RiotRegionalEndpoints.KOREA;
                 break;
             default:
-                url = String.format("%s.", RiotRegionalEndpoints.EUNE);
+                endpoint = RiotRegionalEndpoints.EUNE;
                 break;
         }
-        url += RiotRegionalEndpoints.RIOTAPIHOST;
+        return String.format("%s.%s", endpoint, RiotRegionalEndpoints.RIOTAPIHOST);
     }
 
     public String getUrl() {
