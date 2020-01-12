@@ -1,5 +1,6 @@
 package gg.khatterji.forfun.service.riotapi;
 
+import gg.khatterji.forfun.dto.LeagueEntryDTO;
 import gg.khatterji.forfun.riotapiobject.RiotLeagueEntry;
 
 import java.util.List;

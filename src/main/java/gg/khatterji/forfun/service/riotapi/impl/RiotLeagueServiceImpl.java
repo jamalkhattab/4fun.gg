@@ -2,6 +2,8 @@ package gg.khatterji.forfun.service.riotapi.impl;
 
 import gg.khatterji.forfun.configuration.RiotAPIKeyConfiguration;
 import gg.khatterji.forfun.constant.RiotEndpoints;
+import gg.khatterji.forfun.dto.LeagueEntryDTO;
+import gg.khatterji.forfun.dto.LeagueEntryDTOBuilder;
 import gg.khatterji.forfun.riotapiobject.RiotLeagueEntry;
 import gg.khatterji.forfun.service.riotapi.RiotLeagueService;
 import gg.khatterji.forfun.service.utility.RiotAPIUrlHandler;

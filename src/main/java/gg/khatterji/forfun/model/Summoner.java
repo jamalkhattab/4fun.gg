@@ -1,10 +1,8 @@
 package gg.khatterji.forfun.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "summoner")
@@ -15,25 +13,28 @@ public class Summoner {
     private String encryptedSummonerId;
     private String puuid;
     private String region;
-    private Long level;
+    private Long summonerLevel;
     private String name;
     private Long profileIconId;
-    private Long revisionDate;
+    private Timestamp revisionDate;
+    private String accountId;
+    private Timestamp lastUpdatedDate;
 
-    public Summoner(){
+    public Summoner() {
         super();
     }
 
-    public Summoner(Long id, String encryptedSummonerId, String puuid, String region, Long level, String name, Long profileIconId, Long revisionDate) {
-        super();
-        this.id = id;
+    public Summoner(String encryptedSummonerId, String puuid, String region, Long summonerLevel, String name, Long profileIconId,
+                    Timestamp revisionDate, String accountId, Timestamp lastUpdatedDate) {
         this.encryptedSummonerId = encryptedSummonerId;
         this.puuid = puuid;
         this.region = region;
-        this.level = level;
+        this.summonerLevel = summonerLevel;
         this.name = name;
         this.profileIconId = profileIconId;
         this.revisionDate = revisionDate;
+        this.accountId = accountId;
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public Long getId() {
@@ -68,12 +69,12 @@ public class Summoner {
         this.region = region;
     }
 
-    public Long getLevel() {
-        return level;
+    public Long getSummonerLevel() {
+        return summonerLevel;
     }
 
-    public void setLevel(Long level) {
-        this.level = level;
+    public void setSummonerLevel(Long summonerLevel) {
+        this.summonerLevel = summonerLevel;
     }
 
     public String getName() {
@@ -92,11 +93,29 @@ public class Summoner {
         this.profileIconId = profileIconId;
     }
 
-    public Long getRevisionDate() {
+    public Timestamp getRevisionDate() {
         return revisionDate;
     }
 
-    public void setRevisionDate(Long revisionDate) {
+    public void setRevisionDate(Timestamp revisionDate) {
         this.revisionDate = revisionDate;
     }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public Timestamp getLastUpdatedDate() {
+        return lastUpdatedDate;
+    }
+
+    public void setLastUpdatedDate(Timestamp lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
+    }
+
+
 }

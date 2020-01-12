@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'groovy'
 
 group = 'gg.khatterji'
 version = '0.0.1-SNAPSHOT'
@@ -21,4 +22,5 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//for Reactor Netty at http library delegated by WebClient:
 	testImplementation 'io.projectreactor:reactor-test'
+	implementation('org.codehaus.groovy:groovy:2.5.3')
 }
