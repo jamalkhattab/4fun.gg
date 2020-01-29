@@ -2,25 +2,37 @@ package gg.khatterji.forfun.service.forfun.impl;
 
 import gg.khatterji.forfun.dto.LeagueEntryDTO;
 import gg.khatterji.forfun.dto.SummonerDTO;
-import gg.khatterji.forfun.dto.SummonerDTOBuilder;
 import gg.khatterji.forfun.model.Summoner;
-import gg.khatterji.forfun.model.SummonerBuilder;
 import gg.khatterji.forfun.repository.SummonerRepository;
+import gg.khatterji.forfun.riotapiobject.RiotLeagueEntry;
 import gg.khatterji.forfun.riotapiobject.RiotSummoner;
+import gg.khatterji.forfun.service.forfun.LeagueService;
 import gg.khatterji.forfun.service.forfun.SummonerService;
+import gg.khatterji.forfun.service.objectmapper.LeagueEntryDTOMapper;
+import gg.khatterji.forfun.service.objectmapper.SummonerDTOMapper;
+import gg.khatterji.forfun.service.objectmapper.SummonerEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SummonerServiceImpl implements SummonerService {
     private final SummonerRepository summonerRepository;
+    private final SummonerEntityMapper summonerEntityMapper;
+    private final LeagueService leagueService;
+    private final SummonerDTOMapper summonerDTOMapper;
+    private final LeagueEntryDTOMapper leagueEntryDTOMapper;
 
     @Autowired
-    public SummonerServiceImpl(SummonerRepository summonerRepository) {
+    public SummonerServiceImpl(SummonerRepository summonerRepository, LeagueService leagueService, SummonerEntityMapper summonerEntityMapper,
+                               SummonerDTOMapper summonerDTOMapper, LeagueEntryDTOMapper leagueEntryDTOMapper) {
         this.summonerRepository = summonerRepository;
+        this.leagueService = leagueService;
+        this.summonerEntityMapper = summonerEntityMapper;
+        this.summonerDTOMapper = summonerDTOMapper;
+        this.leagueEntryDTOMapper = leagueEntryDTOMapper;
     }
 
     @Override
@@ -29,51 +41,41 @@ public class SummonerServiceImpl implements SummonerService {
     }
 
     @Override
-    public Summoner convertAndSaveOrUpdateSummoner(RiotSummoner riotSummoner, String region) {
-        Summoner newSummonerData = convertToEntity(riotSummoner, region);
-        return summonerRepository.save(newSummonerData);
+    public SummonerDTO saveSummonerAndLeagueEntries(RiotSummoner riotSummoner, List<RiotLeagueEntry> riotLeagueEntries, String region) {
+        Summoner summoner = summonerEntityMapper.convertRiotSummonerToEntity(riotSummoner);
+        summoner.setRegion(region);
+        summonerRepository.save(summoner);
+        leagueService.saveLeagueEntries(riotLeagueEntries, summoner);
+        return convertToDTO(riotSummoner, riotLeagueEntries);
+    }
+
+    private SummonerDTO convertToDTO(RiotSummoner riotSummoner, List<RiotLeagueEntry> riotLeagueEntries)
+    {
+        SummonerDTO summonerDTO = summonerDTOMapper.convertFromRiotSummonerToDTO(riotSummoner);
+        List<LeagueEntryDTO> leagueEntryDTOs = riotLeagueEntries.stream()
+                                                                .map(leagueEntryDTOMapper::convertFromRiotLeagueEntryToDTO)
+                                                                .collect(Collectors.toList());
+        summonerDTO.setLeagueEntries(leagueEntryDTOs);
+        return summonerDTO;
     }
 
     @Override
-    public Summoner convertAndUpdateSummoner(Summoner existingSummoner, RiotSummoner riotSummoner, String region) {
-        Summoner newSummonerData = convertToEntity(riotSummoner, region);
-        newSummonerData.setId(existingSummoner.getId());
-        return summonerRepository.save(newSummonerData);
-    }
-
-    private Summoner convertToEntity(RiotSummoner riotSummoner, String region) {
-       return new SummonerBuilder().setEncryptedSummonerId(riotSummoner.getId())
-                .setPuuid(riotSummoner.getPuuid())
-                .setRegion(region)
-                .setSummonerLevel(riotSummoner.getSummonerLevel())
-                .setName(riotSummoner.getName())
-                .setProfileIconId(riotSummoner.getProfileIconId())
-                .setRevisionDate(riotSummoner.getRevisionDate())
-                .setAccountId(riotSummoner.getAccountId())
-                .setLastUpdatedDate(new Timestamp(System.currentTimeMillis()))
-                .createSummoner();
+    public SummonerDTO updateSummonerAndLeagueEntries(Long existingSummonerId, RiotSummoner riotSummoner, List<RiotLeagueEntry> riotLeagueEntries, String region) {
+        Summoner newSummonerData = summonerEntityMapper.convertRiotSummonerToEntity(riotSummoner);
+        newSummonerData.setId(existingSummonerId);
+        newSummonerData.setRegion(region);
+        newSummonerData = summonerRepository.save(newSummonerData);
+        leagueService.updateLeagueEntries(riotLeagueEntries, newSummonerData);
+        return convertToDTO(riotSummoner, riotLeagueEntries);
     }
 
     @Override
-    public SummonerDTO convertFromRiotSummonerToDTO(RiotSummoner riotSummoner, String region, List<LeagueEntryDTO> leagueEntryDTOS) {
-        return new SummonerDTOBuilder()
-                                    .setName(riotSummoner.getName())
-                                    .setLevel(riotSummoner.getSummonerLevel())
-                                    .setProfileIconId(riotSummoner.getProfileIconId())
-                                    .setRegion(region)
-                                    .setLeagueEntries(leagueEntryDTOS)
-                                    .createSummonerDTO();
+    public SummonerDTO convertFromSummonerToDTO(Summoner summoner, String region, List<LeagueEntryDTO> leagueEntryDTOS, long timeLeftForUpdate) {
+        SummonerDTO summonerDTO = summonerDTOMapper.convertFromSummonerToDTO(summoner);
+        summonerDTO.setRegion(region);
+        summonerDTO.setLeagueEntries(leagueEntryDTOS);
+        summonerDTO.setSecondsLeftForUpdate(timeLeftForUpdate);
+        return summonerDTO;
     }
 
-    @Override
-    public SummonerDTO convertFromSummonerToDTO(Summoner summoner, String region, List<LeagueEntryDTO> leagueEntryDTOS, Long secondsLeftForUpdate) {
-        return new SummonerDTOBuilder()
-                                    .setName(summoner.getName())
-                                    .setLevel(summoner.getSummonerLevel())
-                                    .setProfileIconId(summoner.getProfileIconId())
-                                    .setRegion(region)
-                                    .setLeagueEntries(leagueEntryDTOS)
-                                    .setSecondsLeftForUpdate(secondsLeftForUpdate)
-                                    .createSummonerDTO();
-    }
 }

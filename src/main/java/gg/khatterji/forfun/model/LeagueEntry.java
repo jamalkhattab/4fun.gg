@@ -1,7 +1,6 @@
 package gg.khatterji.forfun.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,7 +13,9 @@ public class LeagueEntry implements Serializable  {
     @Id
     @GeneratedValue
     private Long id;
+
     private String queueType;
+
     private boolean hotStreak;
     private boolean veteran;
     private boolean inactive;
@@ -29,7 +30,6 @@ public class LeagueEntry implements Serializable  {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "summoner_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Summoner summoner;
 
     public LeagueEntry() {
